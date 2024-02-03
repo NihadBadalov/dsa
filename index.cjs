@@ -22,3 +22,10 @@ console.log('Sorted', ll.toString());
 ll.shuffle();
 
 console.log('Shuffled', ll.toString());
+
+let i = 0;
+for (const e of ll.shuffleCycle()) {
+  console.log(e.value);
+  i++;
+  if (i > 70) break;
+}

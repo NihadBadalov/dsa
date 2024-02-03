@@ -109,6 +109,12 @@ class LinkedList {
     const e = this.at(i);
     if (!e) return undefined;
 
+    if (this.length === 1) {
+      this.head = undefined;
+      this.length = 0;
+      return;
+    }
+
     e.previous.next = e.next;
     e.next.previous = e.previous;
     this.length--;
@@ -137,10 +143,12 @@ class LinkedList {
    */
   at(n) {
     const ind = n >= 0 ? n % this.length : this.length - (-n % this.length);
-    let i = 0;
-    for (const e of this) {
+    let i = this.length < 4 ? 0 : (ind < Math.floor(this.length / 2) ? 0 : this.length);
+    const side = i === 0 ? 0 : 1;
+    for (const e of (i === 0 ? this : this.reversedIterator())) {
       if (i === ind) return e;
-      i++;
+      if (side === 0) i++;
+      else i--;
     }
     return undefined;
   }
@@ -207,6 +215,15 @@ class LinkedList {
     this.head = this.head.next;
   }
 
+  /**
+    * Return a random element of Linked List
+   * @returns {Node | undefined}
+   */
+  random() {
+      const randomIdx = Math.floor(Math.random() * this.length);
+      return this.at(randomIdx);
+  }
+
   /** @returns {Node | undefined} */
   *[Symbol.iterator]() {
     let current = this.head;
@@ -214,6 +231,33 @@ class LinkedList {
       yield current;
       current = current.next;
       if (current === this.head) return;
+    }
+  }
+
+  /** Cycle through Linked List */
+  *reversedIterator() {
+    let current = this.head.previous;
+    while (current) {
+      yield current;
+      current = current.previous;
+      if (current === this.head) return;
+    }
+  }
+
+  /** Cycle through Linked List */
+  *cycle() {
+    let current = this.head;
+    while (current) {
+      yield current;
+      current = current.next;
+    }
+  }
+
+  /** Cycle through Linked List */
+  *shuffleCycle() {
+    while (true) {
+      const randomIdx = Math.floor(Math.random() * this.length);
+      yield this.at(randomIdx);
     }
   }
 
