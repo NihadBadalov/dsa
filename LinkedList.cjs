@@ -145,11 +145,25 @@ class LinkedList {
     const ind = n >= 0 ? n % this.length : this.length - (-n % this.length);
     let i = this.length < 4 ? 0 : (ind < Math.floor(this.length / 2) ? 0 : this.length);
     const side = i === 0 ? 0 : 1;
-    for (const e of (i === 0 ? this : this.reversedIterator())) {
+    /*
+      * Removed as it uses more memory than needed
+      *
+      * for (const e of (i === 0 ? this : this.reversedIterator())) {
       if (i === ind) return e;
       if (side === 0) i++;
       else i--;
+    } */
+
+    let current = side === 0 ? this.head : this.head.previous;
+    while (current) {
+      if (i === ind) return e;
+      current = side === 0
+        ? current.next
+        : current.previous;
+      if (side === 0) i++;
+      else i--;
     }
+
     return undefined;
   }
 
@@ -220,8 +234,9 @@ class LinkedList {
    * @returns {Node | undefined}
    */
   random() {
-      const randomIdx = Math.floor(Math.random() * this.length);
-      return this.at(randomIdx);
+    if (!this.length) return undefined;
+    const randomIdx = Math.floor(Math.random() * this.length);
+    return this.at(randomIdx);
   }
 
   /** @returns {Node | undefined} */
