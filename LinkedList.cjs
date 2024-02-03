@@ -101,18 +101,36 @@ class LinkedList {
   }
 
   /**
+    * Removes element with index of x
+   * @param {number} x Index of x to remove
+   */
+  remove(i) {
+    /** @type {Node | undefined} */
+    const e = this.at(i);
+    if (!e) return undefined;
+
+    e.previous.next = e.next;
+    e.next.previous = e.previous;
+    this.length--;
+
+    if (i === 0) {
+      this.head = this.head.next === this.head ? undefined : this.head.next;
+    }
+  }
+
+  /**
    * @param {any} val Value to search index of
    * @returns {number} If found, element of index; otherwise, -1
    */
   indexOf(val) {
     let i = 0;
     for (const e of this) {
-      if (val === e) return i;
+      if (val === e.value) return i;
       i++;
     }
     return -1;
   }
-  
+
   /**
     * Returns element at index n
    * @param {number} n Index
@@ -125,6 +143,50 @@ class LinkedList {
       i++;
     }
     return undefined;
+  }
+
+  /** Sort Linked List in place */
+  sort() {
+    // future Me, sorry. can't be bothered to normally implement this right now
+    // at least this is either O(n log n) or O(n) - (not sure what the arr.sort T.Compl. is)
+    let elements = [];
+    for (const e of this) {
+      elements.push(e);
+    }
+    elements = elements.sort((a, b) => a.value - b.value);
+
+    while (this.length > 0) {
+      this.remove(0);
+    }
+
+    for (const e of elements) {
+      this.append(e.value);
+    }
+  }
+
+  /** Shuffle Linked List in place */
+  shuffle() {
+    // future Me, sorry. can't be bothered to normally implement this right now
+    // at least this is either O(n log n) or O(n) - (not sure what the arr.sort T.Compl. is)
+    let elements = [];
+    for (const e of this) {
+      elements.push(e);
+    }
+    elements = ((array) => {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+      return array;
+    })(elements);
+
+    while (this.length > 0) {
+      this.remove(0);
+    }
+
+    for (const e of elements) {
+      this.append(e.value);
+    }
   }
 
   /** Reverses Linked List in place */
