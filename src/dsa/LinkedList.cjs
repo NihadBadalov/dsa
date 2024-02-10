@@ -116,6 +116,8 @@ class LinkedList {
     if (i === 0) {
       this.head = this.head.next === this.head ? undefined : this.head.next;
     }
+
+    return e;
   }
 
   /**
@@ -137,8 +139,11 @@ class LinkedList {
    */
   at(n) {
     const ind = n >= 0 ? n % this.length : this.length - (-n % this.length);
+    if (isNaN(ind)) return undefined;
+
     let i = this.length < 4 ? 0 : (ind < Math.floor(this.length / 2) ? 0 : this.length - 1);
     const side = i === 0 ? 0 : 1;
+
     /*
       * Removed as it uses more memory than needed
       *
