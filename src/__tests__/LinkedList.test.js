@@ -66,6 +66,21 @@ test('at - linear search from right', () => {
   expect(ll.at(8).value).toBe(9);
 });
 
+test('at - negative', () => {
+  const ll = new LinkedList([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
+  expect(ll.at(-1).value).toBe(10);
+});
+
+test('at - negative with one element in LL', () => {
+  const ll = new LinkedList([20]);
+  expect(ll.at(-1).value).toBe(20);
+});
+
+test('at - negative > len; with one element in LL', () => {
+  const ll = new LinkedList([20]);
+  expect(ll.at(-10).value).toBe(20);
+});
+
 test('sort', () => {
   const ll = new LinkedList([-2, 2, -3, 1, 2, 0, 1, 1337, Infinity, -Infinity]);
   ll.sort();
