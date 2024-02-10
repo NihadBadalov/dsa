@@ -277,6 +277,14 @@ class LinkedList {
     }
     return elements.join(', ');
   }
+
+  toReversedString() {
+    const elements = [];
+    for (const e of this.reverseGenerator()) {
+      elements.push(typeof e.value === 'string' ? `'${e.value}'` : e.value);
+    }
+    return elements.join(', ');
+  }
 }
 
 module.exports = LinkedList;
