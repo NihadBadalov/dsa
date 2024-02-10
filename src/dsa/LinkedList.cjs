@@ -106,7 +106,7 @@ class LinkedList {
     if (this.length === 1) {
       this.head = undefined;
       this.length = 0;
-      return;
+      return e;
     }
 
     e.previous.next = e.next;
