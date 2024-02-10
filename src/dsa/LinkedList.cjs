@@ -50,12 +50,6 @@ class LinkedList {
   }
 
   /**
-    * Same thing as append(...)
-   * @param {any} e
-   */
-  push(e) { append(e) }
-
-  /**
     * Adds element to the beginning of Linked List
    * @param {any} e 
    */
